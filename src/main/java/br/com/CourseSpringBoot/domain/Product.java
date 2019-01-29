@@ -1,5 +1,6 @@
 package br.com.CourseSpringBoot.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +27,7 @@ public class Product implements Serializable {
     private String name;
     private Double price;
 
+    @JsonBackReference
     @ManyToMany
     @JoinTable(name = "CATEGORY_PRODUCT",
             joinColumns = @JoinColumn(name = "product_id"),
