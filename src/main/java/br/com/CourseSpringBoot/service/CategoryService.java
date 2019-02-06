@@ -24,7 +24,7 @@ public class CategoryService {
 
     public Category findById(Integer id){
         Optional<Category> ob = repo.findById(id);
-        return ob.orElseThrow(() -> new ResourceNotFoundException("sdasdasd" + Category.class.getName()));
+        return ob.orElseThrow(() -> new ResourceNotFoundException("Object not found" + Category.class.getName()));
     }
 
 
