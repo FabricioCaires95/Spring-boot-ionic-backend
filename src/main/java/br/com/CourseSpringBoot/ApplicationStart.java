@@ -1,13 +1,8 @@
 package br.com.CourseSpringBoot;
 
-import br.com.CourseSpringBoot.domain.Category;
-import br.com.CourseSpringBoot.domain.City;
-import br.com.CourseSpringBoot.domain.Product;
-import br.com.CourseSpringBoot.domain.State;
-import br.com.CourseSpringBoot.repositories.CategoryRepository;
-import br.com.CourseSpringBoot.repositories.CityRepository;
-import br.com.CourseSpringBoot.repositories.ProductRepository;
-import br.com.CourseSpringBoot.repositories.StateRepository;
+import br.com.CourseSpringBoot.domain.*;
+import br.com.CourseSpringBoot.enums.ClientType;
+import br.com.CourseSpringBoot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -34,6 +29,11 @@ public class ApplicationStart implements CommandLineRunner {
     @Autowired
     private CityRepository cityRepository;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     public static void main(String[] args){
 
@@ -66,8 +66,18 @@ public class ApplicationStart implements CommandLineRunner {
         City ci3 = new City(null, "Orlando", s2);
         City ci4 = new City(null, "San Francisco", s1);
 
+        Client t1 = new Client(null,"Fabricio Santos", "fabricio@gmail.com", "123456789", ClientType.PHYISICALPERSON) ;
+        t1.getPhones().addAll(Arrays.asList("36525877", "987548728"));
+
+        Address ad1 = new Address(null,"st times square", "52", "301408", t1, ci1);
+        Address ad2 = new Address(null,"21t street ", "51", "308170", t1, ci4);
+
+        t1.getAddresses().addAll(Arrays.asList(ad1,ad2));
+
         s1.getCities().addAll(Arrays.asList(ci1,ci4));
         s2.getCities().addAll(Arrays.asList(ci2,ci3));
+
+
 
         categoryRepository.saveAll(Arrays.asList(c1,c2));
         productRepository.saveAll(Arrays.asList(p1,p2,p3));
@@ -75,6 +85,7 @@ public class ApplicationStart implements CommandLineRunner {
         stateRepository.saveAll(Arrays.asList(s1,s2));
         cityRepository.saveAll(Arrays.asList(ci1,ci2,ci3,ci4));
 
-
+        clientRepository.saveAll(Arrays.asList(t1));
+        addressRepository.saveAll(Arrays.asList(ad1,ad2));
     }
 }
