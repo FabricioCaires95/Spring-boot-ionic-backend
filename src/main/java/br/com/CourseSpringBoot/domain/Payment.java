@@ -1,6 +1,7 @@
 package br.com.CourseSpringBoot.domain;
 
 import br.com.CourseSpringBoot.enums.StatePayment;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +24,7 @@ public abstract class Payment implements Serializable {
 
     private Integer state;
 
-
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "order_id")
     @MapsId

@@ -1,6 +1,7 @@
 package br.com.CourseSpringBoot.domain;
 
 import br.com.CourseSpringBoot.enums.ClientType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +36,7 @@ public class Client implements Serializable {
     @CollectionTable(name = "PHONE")
     private Set<String> phones = new HashSet<>();
 
+    @JsonBackReference
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 

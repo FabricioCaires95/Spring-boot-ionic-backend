@@ -1,5 +1,6 @@
 package br.com.CourseSpringBoot.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,7 @@ public class OrderItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonIgnore
     @EmbeddedId
     private OrderItemPK id = new OrderItemPK();
 
@@ -36,9 +38,11 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public Order getOrder(){
         return id.getOrder();
     }
+
 
     public Product getProduct(){
         return id.getProduct();

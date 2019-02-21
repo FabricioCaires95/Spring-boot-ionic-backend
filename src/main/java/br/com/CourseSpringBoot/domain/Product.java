@@ -1,6 +1,7 @@
 package br.com.CourseSpringBoot.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,6 +38,7 @@ public class Product implements Serializable {
     )
     private List<Category> categories = new ArrayList();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.product")
     private Set<OrderItem> orderItems = new HashSet<>();
 
@@ -50,6 +52,7 @@ public class Product implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public List<Order> getOrders(){
         List<Order> orders = new ArrayList<>();
 
