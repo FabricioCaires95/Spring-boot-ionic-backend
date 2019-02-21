@@ -7,7 +7,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -35,6 +37,9 @@ public class Product implements Serializable {
     )
     private List<Category> categories = new ArrayList();
 
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> orderItems = new HashSet<>();
+
     public Product(){
 
     }
@@ -44,6 +49,17 @@ public class Product implements Serializable {
         this.name = name;
         this.price = price;
     }
+
+    public List<Order> getOrders(){
+        List<Order> orders = new ArrayList<>();
+
+        for (OrderItem x : orderItems){
+            orders.add(x.getOrder());
+        }
+
+        return orders;
+    }
+
 
     @Override
     public boolean equals(Object o) {

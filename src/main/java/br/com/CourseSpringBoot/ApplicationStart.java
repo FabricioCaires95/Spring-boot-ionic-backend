@@ -43,6 +43,9 @@ public class ApplicationStart implements CommandLineRunner {
     @Autowired
     private PaymentRepository paymentRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
     public static void main(String[] args){
 
         SpringApplication.run(ApplicationStart.class, args);
@@ -114,9 +117,20 @@ public class ApplicationStart implements CommandLineRunner {
         Payment pg2 = new PayPal(null, StatePayment.CANCELED, o2,"fabricio@gmail.com", "1111");
         o2.setPayment(pg2);
 
-     orderRepository.saveAll(Arrays.asList(o1, o2));
+        orderRepository.saveAll(Arrays.asList(o1, o2));
 
         paymentRepository.saveAll(Arrays.asList(pg1, pg2));
 
+        OrderItem oi1 = new OrderItem(o1,p1,0.10, 50, 1.500);
+
+        OrderItem oi2 = new OrderItem(o2,p2,0.00, 1, 500.00);
+
+        OrderItem oi3 = new OrderItem(o2,p3,0.00, 1, 300.00);
+
+        o1.getOrderItems().addAll(Arrays.asList(oi1,oi2));
+
+        p1.getOrderItems().addAll(Arrays.asList(oi3));
+
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3));
     }
 }
