@@ -1,11 +1,9 @@
 package br.com.CourseSpringBoot.domain;
 
 import br.com.CourseSpringBoot.enums.ClientType;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
@@ -28,7 +26,7 @@ public class Client implements Serializable {
     private String cpfOrCnpj;
     private Integer clientType;
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "client")
     private List<Address> addresses = new ArrayList<>();
 
@@ -36,7 +34,7 @@ public class Client implements Serializable {
     @CollectionTable(name = "PHONE")
     private Set<String> phones = new HashSet<>();
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 

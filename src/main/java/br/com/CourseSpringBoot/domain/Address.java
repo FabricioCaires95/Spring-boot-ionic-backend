@@ -1,6 +1,7 @@
 package br.com.CourseSpringBoot.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +25,7 @@ public class Address implements Serializable {
     private String houseNumber;
     private String zipCode;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
