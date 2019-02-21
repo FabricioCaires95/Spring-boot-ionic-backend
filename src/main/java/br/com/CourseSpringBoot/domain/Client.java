@@ -1,6 +1,7 @@
 package br.com.CourseSpringBoot.domain;
 
 import br.com.CourseSpringBoot.enums.ClientType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,12 +27,16 @@ public class Client implements Serializable {
     private String cpfOrCnpj;
     private Integer clientType;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "client")
     private List<Address> addresses = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(name = "PHONE")
     private Set<String> phones = new HashSet<>();
+
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders = new ArrayList<>();
 
     public Client(){
 

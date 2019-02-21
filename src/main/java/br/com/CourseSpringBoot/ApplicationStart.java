@@ -2,12 +2,14 @@ package br.com.CourseSpringBoot;
 
 import br.com.CourseSpringBoot.domain.*;
 import br.com.CourseSpringBoot.enums.ClientType;
+import br.com.CourseSpringBoot.enums.StatePayment;
 import br.com.CourseSpringBoot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 /**
@@ -34,6 +36,12 @@ public class ApplicationStart implements CommandLineRunner {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     public static void main(String[] args){
 
@@ -69,15 +77,19 @@ public class ApplicationStart implements CommandLineRunner {
         Client t1 = new Client(null,"Fabricio Santos", "fabricio@gmail.com", "123456789", ClientType.PHYISICALPERSON) ;
         t1.getPhones().addAll(Arrays.asList("36525877", "987548728"));
 
+
         Address ad1 = new Address(null,"st times square", "52", "301408", t1, ci1);
         Address ad2 = new Address(null,"21t street ", "51", "308170", t1, ci4);
+
+
+
+
+
 
         t1.getAddresses().addAll(Arrays.asList(ad1,ad2));
 
         s1.getCities().addAll(Arrays.asList(ci1,ci4));
         s2.getCities().addAll(Arrays.asList(ci2,ci3));
-
-
 
         categoryRepository.saveAll(Arrays.asList(c1,c2));
         productRepository.saveAll(Arrays.asList(p1,p2,p3));
@@ -87,5 +99,24 @@ public class ApplicationStart implements CommandLineRunner {
 
         clientRepository.saveAll(Arrays.asList(t1));
         addressRepository.saveAll(Arrays.asList(ad1,ad2));
+
+        SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        Order o1 = new Order(null, sd.parse("30/09/2018 11:52"), t1,ad2);
+
+        Order o2 = new Order(null, sd.parse("29/10/2018 15:52"), t1,ad1);
+
+        t1.getOrders().addAll(Arrays.asList(o1,o2));
+
+        Payment pg1 = new CreditCard(null, StatePayment.PAID, o1, 6);
+        o1.setPayment(pg1);
+
+        Payment pg2 = new PayPal(null, StatePayment.CANCELED, o2,"fabricio@gmail.com", "1111");
+        o2.setPayment(pg2);
+
+     orderRepository.saveAll(Arrays.asList(o1, o2));
+
+        paymentRepository.saveAll(Arrays.asList(pg1, pg2));
+
     }
 }

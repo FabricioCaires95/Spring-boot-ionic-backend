@@ -1,50 +1,51 @@
 package br.com.CourseSpringBoot.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author fabricio
  */
+
 @Getter
 @Setter
 @Entity
-public class Address implements Serializable {
+@Table(name = "order_table")
+public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String street;
-    private String houseNumber;
-    private String zipCode;
 
-    @JsonBackReference
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
+    private Payment payment;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
+    @JoinColumn(name = "address_id")
+    private Address address;
 
-    public Address(){
-
+    public Order(Integer id, Date date, Client client, Address address) {
+        this.id = id;
+        this.date = date;
+        this.client = client;
+        this.address = address;
     }
 
-    public Address(Integer id, String street, String houseNumber, String zipCode, Client client, City city) {
-        super();
-        this.id = id;
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.zipCode = zipCode;
-        this.client = client;
-        this.city = city;
+    public Order(){
+
     }
 
     @Override
@@ -52,9 +53,9 @@ public class Address implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Address address = (Address) o;
+        Order order = (Order) o;
 
-        return id.equals(address.id);
+        return id.equals(order.id);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package br.com.CourseSpringBoot.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class City implements Serializable {
 
     private String name;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "state_id")
     private State state;

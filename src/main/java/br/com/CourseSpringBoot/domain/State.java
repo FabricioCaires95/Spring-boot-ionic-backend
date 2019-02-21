@@ -1,5 +1,6 @@
 package br.com.CourseSpringBoot.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,7 @@ public class State implements Serializable {
 
     private String name;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "state")
     private List<City> cities = new ArrayList<>();
 
