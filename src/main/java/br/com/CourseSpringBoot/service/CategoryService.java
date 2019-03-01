@@ -27,6 +27,9 @@ public class CategoryService {
         return ob.orElseThrow(() -> new ResourceNotFoundException("Object not found" + Category.class.getName()));
     }
 
-
+    public Category insert(Category cat){
+        cat.setId(null);
+        return repo.save(cat);
+    }
 
 }
