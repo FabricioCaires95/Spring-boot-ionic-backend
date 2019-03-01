@@ -2,6 +2,7 @@ package br.com.CourseSpringBoot.service;
 
 import br.com.CourseSpringBoot.domain.Category;
 
+import br.com.CourseSpringBoot.dto.CategoryDTO;
 import br.com.CourseSpringBoot.exceptions.DataIntegrityException;
 import br.com.CourseSpringBoot.exceptions.ResourceNotFoundException;
 import br.com.CourseSpringBoot.repositories.CategoryRepository;
@@ -65,6 +66,10 @@ public class CategoryService {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderby);
 
         return repo.findAll(pageRequest);
+    }
+
+    public Category toCategory(CategoryDTO catDTO){
+        return new Category(catDTO.getId(), catDTO.getName());
     }
 
 }
