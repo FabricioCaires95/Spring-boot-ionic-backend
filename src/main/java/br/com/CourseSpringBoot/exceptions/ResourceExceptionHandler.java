@@ -25,5 +25,14 @@ public class ResourceExceptionHandler {
 
     }
 
+    @ExceptionHandler(value = DataIntegrityException.class)
+    public ResponseEntity<ResponseMessage> dataIntegrityViolation(DataIntegrityException e, HttpServletRequest req){
+
+        ResponseMessage message = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+
+    }
+
 
 }

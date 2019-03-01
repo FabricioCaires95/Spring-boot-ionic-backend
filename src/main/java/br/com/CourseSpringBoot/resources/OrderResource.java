@@ -21,7 +21,7 @@ public class OrderResource {
     private OrderService orderService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Integer id){
+    public ResponseEntity<Order> findById(@PathVariable Integer id){
 
         Order order  = orderService.findById(id);
 

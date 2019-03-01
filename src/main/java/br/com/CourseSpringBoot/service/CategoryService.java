@@ -2,10 +2,12 @@ package br.com.CourseSpringBoot.service;
 
 import br.com.CourseSpringBoot.domain.Category;
 
+import br.com.CourseSpringBoot.exceptions.DataIntegrityException;
 import br.com.CourseSpringBoot.exceptions.ResourceNotFoundException;
 import br.com.CourseSpringBoot.repositories.CategoryRepository;
 import br.com.CourseSpringBoot.resources.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,13 +25,32 @@ public class CategoryService {
 
 
     public Category findById(Integer id){
+
         Optional<Category> ob = repo.findById(id);
-        return ob.orElseThrow(() -> new ResourceNotFoundException("Object not found" + Category.class.getName()));
+        return ob.orElseThrow(() ->
+                new ResourceNotFoundException("Category not found" + Category.class.getName()));
     }
 
     public Category insert(Category cat){
+
         cat.setId(null);
         return repo.save(cat);
     }
 
+
+    public Category updateCategory(Category cat){
+
+        findById(cat.getId());
+        return repo.save(cat);
+    }
+
+    public void delete(Integer id){
+        findById(id);
+        try {
+            repo.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("This Category cannot be deleted, Referential integrity constraint violation");
+        }
+
+    }
 }
