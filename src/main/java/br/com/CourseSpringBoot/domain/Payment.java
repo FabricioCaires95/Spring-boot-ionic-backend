@@ -2,6 +2,7 @@ package br.com.CourseSpringBoot.domain;
 
 import br.com.CourseSpringBoot.enums.StatePayment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
+@EqualsAndHashCode
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Payment implements Serializable {
@@ -48,18 +50,5 @@ public abstract class Payment implements Serializable {
         this.state = state.getCod();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        Payment payment = (Payment) o;
-
-        return id.equals(payment.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 }

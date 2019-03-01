@@ -1,6 +1,7 @@
 package br.com.CourseSpringBoot.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
+@EqualsAndHashCode
 @Entity
 public class OrderItem implements Serializable {
 
@@ -26,11 +28,11 @@ public class OrderItem implements Serializable {
     private Integer amount;
     private Double price;
 
-    public OrderItem(){
+    public OrderItem() {
 
     }
 
-    public OrderItem(Order order, Product product ,Double discount, Integer amount, Double price) {
+    public OrderItem(Order order, Product product, Double discount, Integer amount, Double price) {
         id.setOrder(order);
         id.setProduct(product);
         this.discount = discount;
@@ -39,27 +41,14 @@ public class OrderItem implements Serializable {
     }
 
     @JsonIgnore
-    public Order getOrder(){
+    public Order getOrder() {
         return id.getOrder();
     }
 
 
-    public Product getProduct(){
+    public Product getProduct() {
         return id.getProduct();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        OrderItem orderItem = (OrderItem) o;
-
-        return id.equals(orderItem.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 }

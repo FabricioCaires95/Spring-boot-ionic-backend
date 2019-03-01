@@ -8,6 +8,9 @@ import br.com.CourseSpringBoot.repositories.CategoryRepository;
 import br.com.CourseSpringBoot.resources.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +32,10 @@ public class CategoryService {
         Optional<Category> ob = repo.findById(id);
         return ob.orElseThrow(() ->
                 new ResourceNotFoundException("Category not found" + Category.class.getName()));
+    }
+
+    public List<Category> findAll(){
+        return repo.findAll();
     }
 
     public Category insert(Category cat){
@@ -53,4 +60,11 @@ public class CategoryService {
         }
 
     }
+
+    public Page<Category> findPage(Integer page, Integer linesPerPage, String orderby, String direction){
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderby);
+
+        return repo.findAll(pageRequest);
+    }
+
 }

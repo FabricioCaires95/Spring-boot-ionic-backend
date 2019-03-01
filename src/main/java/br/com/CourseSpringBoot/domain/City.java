@@ -1,6 +1,7 @@
 package br.com.CourseSpringBoot.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
+@EqualsAndHashCode
 @Entity
 public class City implements Serializable {
 
@@ -39,18 +41,5 @@ public class City implements Serializable {
 
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        City city = (City) o;
-
-        return id != null ? id.equals(city.id) : city.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 }

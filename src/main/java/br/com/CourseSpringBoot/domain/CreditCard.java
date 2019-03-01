@@ -1,6 +1,7 @@
 package br.com.CourseSpringBoot.domain;
 
 import br.com.CourseSpringBoot.enums.StatePayment;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 @Entity
 public class CreditCard extends Payment{
 
@@ -28,18 +30,4 @@ public class CreditCard extends Payment{
     public CreditCard() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CreditCard that = (CreditCard) o;
-
-        return parcels.equals(that.parcels);
-    }
-
-    @Override
-    public int hashCode() {
-        return parcels.hashCode();
-    }
 }

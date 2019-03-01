@@ -2,6 +2,7 @@ package br.com.CourseSpringBoot.domain;
 
 import br.com.CourseSpringBoot.enums.ClientType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.*;
  */
 @Getter
 @Setter
+@EqualsAndHashCode
 @Entity
 public class Client implements Serializable {
 
@@ -55,18 +57,5 @@ public class Client implements Serializable {
         return ClientType.toEnum(clientType);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        Client client = (Client) o;
-
-        return id.equals(client.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 }
