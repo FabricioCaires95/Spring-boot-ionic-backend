@@ -1,13 +1,11 @@
 package br.com.CourseSpringBoot.resources;
 
 import br.com.CourseSpringBoot.domain.Client;
+import br.com.CourseSpringBoot.dto.ClientDTO;
 import br.com.CourseSpringBoot.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author fabricio
@@ -22,9 +20,16 @@ public class ClientResource {
     @GetMapping("/{id}")
     public ResponseEntity<Client> findById(@PathVariable Integer id){
 
-        Client cat = service.findById(id);
+        Client cli = service.findById(id);
+
+        return ResponseEntity.ok().body(cli);
+    }
 
 
-        return ResponseEntity.ok().body(cat);
+    public void insert(@RequestBody ClientDTO clientDTO){
+
+
+
+
     }
 }

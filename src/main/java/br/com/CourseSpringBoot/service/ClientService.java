@@ -21,4 +21,9 @@ public class ClientService {
         Optional<Client> ob = clientRepository.findById(id);
         return ob.orElseThrow(() -> new ResourceNotFoundException(("Object not found" + Client.class.getName())));
     }
+
+    public Client insert(Client cli){
+
+        return clientRepository.save(cli);
+    }
 }

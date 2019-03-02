@@ -6,7 +6,6 @@ import br.com.CourseSpringBoot.dto.CategoryDTO;
 import br.com.CourseSpringBoot.exceptions.DataIntegrityException;
 import br.com.CourseSpringBoot.exceptions.ResourceNotFoundException;
 import br.com.CourseSpringBoot.repositories.CategoryRepository;
-import br.com.CourseSpringBoot.resources.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package br.com.CourseSpringBoot.resources;
+package br.com.CourseSpringBoot.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +23,7 @@ public class ResponseMessage implements Serializable {
 
 
     public ResponseMessage(Integer status, String msg, Long timestamp) {
+        super();
         this.status = status;
         this.msg = msg;
         this.timestamp = timestamp;

@@ -1,14 +1,13 @@
 package br.com.CourseSpringBoot.exceptions;
 
-import br.com.CourseSpringBoot.domain.Category;
-import br.com.CourseSpringBoot.resources.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
 
 /**
  * @author fabricio
@@ -31,6 +30,19 @@ public class ResourceExceptionHandler {
         ResponseMessage message = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<ResponseMessage> methodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest req){
+
+        ValidationError error  = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Validation Error", System.currentTimeMillis());
+
+        for (FieldError x : e.getBindingResult().getFieldErrors()){
+            error.addError(x.getField(), x.getDefaultMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 
     }
 
