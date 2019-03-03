@@ -45,7 +45,7 @@ public class CategoryService {
     }
 
 
-    public Category updateCategory(Category cat){
+    public Category update(Category cat){
 
         findById(cat.getId());
         return repo.save(cat);
