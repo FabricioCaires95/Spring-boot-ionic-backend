@@ -1,15 +1,20 @@
 package br.com.CourseSpringBoot.resources;
 
 
+import br.com.CourseSpringBoot.domain.Category;
 import br.com.CourseSpringBoot.domain.Client;
+import br.com.CourseSpringBoot.dto.CategoryDTO;
 import br.com.CourseSpringBoot.dto.ClientDTO;
+import br.com.CourseSpringBoot.dto.ClientNewDTO;
 import br.com.CourseSpringBoot.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +35,20 @@ public class ClientResource {
 
         return ResponseEntity.ok().body(cli);
     }
+
+    @PostMapping
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO newdto){
+
+        Client cli = service.toClient(newdto);
+
+        cli = service.insert(cli);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(cli.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody ClientDTO clientDTO, @PathVariable Integer id){
