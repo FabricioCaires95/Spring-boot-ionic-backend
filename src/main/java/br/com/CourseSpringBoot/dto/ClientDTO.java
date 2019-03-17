@@ -1,6 +1,7 @@
 package br.com.CourseSpringBoot.dto;
 
 import br.com.CourseSpringBoot.domain.Client;
+import br.com.CourseSpringBoot.service.validation.ClientUpdate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
+@ClientUpdate
 public class ClientDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
