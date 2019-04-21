@@ -65,13 +65,22 @@ public class ApplicationStart implements CommandLineRunner {
         Product p1 = new Product(null, "Computer", 2000.00);
         Product p2 = new Product(null, "Printer", 800.00);
         Product p3 = new Product(null, "Mouse", 80.00);
+        Product p4 = new Product(null, "Playstation 4", 400.00);
+        Product p5 = new Product(null, "Xbox One", 350.00);
+        Product p6 = new Product(null, "Pen", 2.00);
+        Product p7 = new Product(null, "Java How to Program", 70.00);
+        Product p8 = new Product(null, "Car Mirror", 75.00);
 
         c1.getProducts().addAll(Arrays.asList(p1,p2,p3));
-        c2.getProducts().addAll(Arrays.asList(p2));
+        c2.getProducts().addAll(Arrays.asList(p2,p6));
+        c3.getProducts().addAll(Arrays.asList(p8));
+        c4.getProducts().addAll(Arrays.asList(p7));
+        c5.getProducts().addAll(Arrays.asList(p4,p5));
 
-        p1.getCategories().addAll(Arrays.asList(c1));
+        p1.getCategories().addAll(Arrays.asList(c1,c5));
         p2.getCategories().addAll(Arrays.asList(c1,c2));
         p3.getCategories().addAll(Arrays.asList(c1));
+        p4.getCategories().addAll(Arrays.asList(c1,c5));
 
         State s1 = new State(null, "California");
         State s2 = new State(null, "Florida");
@@ -99,7 +108,7 @@ public class ApplicationStart implements CommandLineRunner {
         s2.getCities().addAll(Arrays.asList(ci2,ci3));
 
         categoryRepository.saveAll(Arrays.asList(c1,c2,c3,c4,c5,c6));
-        productRepository.saveAll(Arrays.asList(p1,p2,p3));
+        productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8));
 
         stateRepository.saveAll(Arrays.asList(s1,s2));
         cityRepository.saveAll(Arrays.asList(ci1,ci2,ci3,ci4));
