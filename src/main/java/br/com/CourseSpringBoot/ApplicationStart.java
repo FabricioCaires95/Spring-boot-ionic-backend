@@ -144,6 +144,7 @@ public class ApplicationStart implements CommandLineRunner {
 
         p1.getOrderItems().addAll(Arrays.asList(oi3));
 
+
         orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3));
     }
 }

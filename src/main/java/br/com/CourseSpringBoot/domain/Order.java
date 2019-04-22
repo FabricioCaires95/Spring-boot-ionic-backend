@@ -1,10 +1,13 @@
 package br.com.CourseSpringBoot.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,6 +22,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "order_table")
 public class Order implements Serializable {
@@ -30,7 +34,7 @@ public class Order implements Serializable {
     private Integer id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern = "dd//MM/yyyy HH:mm")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date date;
 
 
@@ -46,6 +50,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> orderItems = new HashSet<>();
 
@@ -60,5 +65,13 @@ public class Order implements Serializable {
 
     }
 
+    public double OrderValueTotal(){
+        double sum = 0.0;
+        for (OrderItem op: orderItems){
+            sum = sum + op.getSubTotal();
+        }
+
+        return sum;
+    }
 
 }

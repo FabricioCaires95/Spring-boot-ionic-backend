@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
+@ToString
 @EqualsAndHashCode
 @Entity
 public class OrderItem implements Serializable {
@@ -33,6 +35,7 @@ public class OrderItem implements Serializable {
     }
 
     public OrderItem(Order order, Product product, Double discount, Integer amount, Double price) {
+        super();
         id.setOrder(order);
         id.setProduct(product);
         this.discount = discount;
@@ -40,9 +43,18 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    public double getSubTotal(){
+        return (price - discount) * amount;
+    }
+
+
     @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
+    }
+
+    public void setOrder(Order order){
+        id.setOrder(order);
     }
 
 
@@ -50,5 +62,7 @@ public class OrderItem implements Serializable {
         return id.getProduct();
     }
 
-
+    public void setProduct(Product product){
+        id.setProduct(product);
+    }
 }
