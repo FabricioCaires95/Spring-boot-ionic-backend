@@ -11,8 +11,11 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -22,7 +25,6 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "order_table")
 public class Order implements Serializable {
@@ -72,6 +74,31 @@ public class Order implements Serializable {
         }
 
         return sum;
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder builder = new StringBuilder();
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt" , "BR"));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        builder.append("Order number ");
+        builder.append(getId());
+        builder.append("Instante ");
+        builder.append(sdf.format(getDate()));
+        builder.append("Client ");
+        builder.append(getClient().getName());
+        builder.append("Payment status ");
+        builder.append(getPayment().getState().getDescription());
+        builder.append("\nDetalhes: \n");
+
+        for (OrderItem orderItem: orderItems){
+            builder.append(orderItems.toString());
+        }
+
+        builder.append("Total value ");
+        builder.append(nf.format(OrderValueTotal()));
+        return builder.toString();
     }
 
 }

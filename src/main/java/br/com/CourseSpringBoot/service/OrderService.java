@@ -37,6 +37,9 @@ public class OrderService {
     @Autowired
     private PaymentRepository paymentRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     public Order findById(Integer id){
         Optional<Order> ob = orderRepository.findById(id);
         return ob.orElseThrow(() -> new ResourceNotFoundException("Object not found" + Order.class.getName()));
@@ -45,6 +48,7 @@ public class OrderService {
     public Order insert(Order order){
         order.setDate(new Date());
         order.getPayment().setState(StatePayment.PENDENT);
+        order.setClient(clientService.findById(order.getClient().getId()));
         order.getPayment().setOrder(order);
 
         order = orderRepository.save(order);
@@ -52,10 +56,13 @@ public class OrderService {
 
         for (OrderItem op: order.getOrderItems()){
             op.setDiscount(0.0);
-            op.setPrice(productService.findById(op.getProduct().getId()).getPrice());
+            op.setProduct(productService.findById(op.getProduct().getId()));
+            op.setPrice(op.getProduct().getPrice());
             op.setOrder(order);
         }
         orderItemRepository.saveAll(order.getOrderItems());
+
+        emailService.sendOrderConfirmation(order);
 
         return order;
     }
