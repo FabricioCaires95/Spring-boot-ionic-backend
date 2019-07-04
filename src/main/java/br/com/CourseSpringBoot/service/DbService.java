@@ -82,7 +82,7 @@ public class DbService {
         City ci3 = new City(null, "Orlando", s2);
         City ci4 = new City(null, "San Francisco", s1);
 
-        Client t1 = new Client(null,"Fabricio Santos", "fabricio@gmail.com", "123456789", ClientType.PHYISICALPERSON) ;
+        Client t1 = new Client(null,"Fabricio Santos", "fabricio.legend95@gmail.com", "123456789", ClientType.PHYISICALPERSON) ;
         t1.getPhones().addAll(Arrays.asList("36525877", "987548728"));
 
 
@@ -115,7 +115,7 @@ public class DbService {
         Payment pg1 = new CreditCard(null, StatePayment.PAID, o1, 6);
         o1.setPayment(pg1);
 
-        Payment pg2 = new PayPal(null, StatePayment.CANCELED, o2,"fabricio@gmail.com", "1111");
+        Payment pg2 = new PayPal(null, StatePayment.CANCELED, o2,"fabricio.legend95@gmail.com", "1111");
         o2.setPayment(pg2);
 
         orderRepository.saveAll(Arrays.asList(o1, o2));
