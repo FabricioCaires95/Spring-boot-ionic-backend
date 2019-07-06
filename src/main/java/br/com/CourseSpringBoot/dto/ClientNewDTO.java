@@ -28,6 +28,9 @@ public class ClientNewDTO  implements Serializable {
     private String cpfOrCnpj;
     private Integer clientType;
 
+    @NotEmpty(message = "This Field cannot be null")
+    private String password;
+
     @NotEmpty(message = "This Field cannnot be null")
     private String street;
     private String houseNumber;

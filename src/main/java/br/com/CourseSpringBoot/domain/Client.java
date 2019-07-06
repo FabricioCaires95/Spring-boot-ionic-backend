@@ -30,6 +30,8 @@ public class Client implements Serializable {
     private String cpfOrCnpj;
     private Integer clientType;
 
+    @JsonIgnore
+    private String password;
 
     @OneToMany(mappedBy = "client")
     private List<Address> addresses = new ArrayList<>();
@@ -46,12 +48,13 @@ public class Client implements Serializable {
 
     }
 
-    public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType) {
+    public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType, String password) {
         super();
         this.id = id;
         this.name = name;
         this.email = email;
         this.cpfOrCnpj = cpfOrCnpj;
+        this.password = password;
         this.clientType = (clientType==null) ? null : clientType.getCod();
     }
 

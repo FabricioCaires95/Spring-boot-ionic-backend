@@ -5,6 +5,7 @@ import br.com.CourseSpringBoot.enums.ClientType;
 import br.com.CourseSpringBoot.enums.StatePayment;
 import br.com.CourseSpringBoot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -16,6 +17,9 @@ import java.util.Arrays;
  */
 @Service
 public class DbService {
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -82,7 +86,7 @@ public class DbService {
         City ci3 = new City(null, "Orlando", s2);
         City ci4 = new City(null, "San Francisco", s1);
 
-        Client t1 = new Client(null,"Fabricio Santos", "fabricio.legend95@gmail.com", "123456789", ClientType.PHYISICALPERSON) ;
+        Client t1 = new Client(null,"Fabricio Santos", "fabricio.legend95@gmail.com", "123456789", ClientType.PHYISICALPERSON, encoder.encode("123")) ;
         t1.getPhones().addAll(Arrays.asList("36525877", "987548728"));
 
 
