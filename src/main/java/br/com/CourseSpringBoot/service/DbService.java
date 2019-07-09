@@ -3,6 +3,7 @@ package br.com.CourseSpringBoot.service;
 import br.com.CourseSpringBoot.domain.*;
 import br.com.CourseSpringBoot.enums.ClientType;
 import br.com.CourseSpringBoot.enums.StatePayment;
+import br.com.CourseSpringBoot.enums.UserProfile;
 import br.com.CourseSpringBoot.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -86,15 +87,22 @@ public class DbService {
         City ci3 = new City(null, "Orlando", s2);
         City ci4 = new City(null, "San Francisco", s1);
 
-        Client t1 = new Client(null,"Fabricio Santos", "fabricio.legend95@gmail.com", "123456789", ClientType.PHYISICALPERSON, encoder.encode("123")) ;
+        Client t1 = new Client(null,"Fabricio Santos", "fabricio.legend95@gmail.com", "123456789", ClientType.PHYISICALPERSON, encoder.encode("1234")) ;
+        Client t2 = new Client(null, "Joao Silva", "fabricio.vieira995@hotmail.com", "34012887092", ClientType.PHYISICALPERSON, encoder.encode("1234"));
+        t2.addProfile(UserProfile.ADMIN);
+
         t1.getPhones().addAll(Arrays.asList("36525877", "987548728"));
+        t2.getPhones().addAll(Arrays.asList("43847412", "987548728"));
 
 
         Address ad1 = new Address(null,"st times square", "52", "301408", t1, ci1);
         Address ad2 = new Address(null,"21t street ", "51", "308170", t1, ci4);
 
+        Address ad3 = new Address(null,"st times square", "52", "301408", t2, ci1);
+
 
         t1.getAddresses().addAll(Arrays.asList(ad1,ad2));
+        t2.getAddresses().addAll(Arrays.asList(ad3));
 
         s1.getCities().addAll(Arrays.asList(ci1,ci4));
         s2.getCities().addAll(Arrays.asList(ci2,ci3));
@@ -105,8 +113,8 @@ public class DbService {
         stateRepository.saveAll(Arrays.asList(s1,s2));
         cityRepository.saveAll(Arrays.asList(ci1,ci2,ci3,ci4));
 
-        clientRepository.saveAll(Arrays.asList(t1));
-        addressRepository.saveAll(Arrays.asList(ad1,ad2));
+        clientRepository.saveAll(Arrays.asList(t1,t2));
+        addressRepository.saveAll(Arrays.asList(ad1,ad2,ad3));
 
         SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 

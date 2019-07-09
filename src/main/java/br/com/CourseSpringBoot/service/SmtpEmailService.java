@@ -1,5 +1,6 @@
 package br.com.CourseSpringBoot.service;
 
+import br.com.CourseSpringBoot.domain.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +37,8 @@ public class SmtpEmailService extends AbstractEmailService{
         LOG.info("E-mail enviado");
     }
 
+    @Override
+    public void sendOrderConfirmationHtmlEmail(Order order) {
+
+    }
 }

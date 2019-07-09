@@ -1,6 +1,7 @@
 package br.com.CourseSpringBoot.domain;
 
 import br.com.CourseSpringBoot.enums.ClientType;
+import br.com.CourseSpringBoot.enums.UserProfile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author fabricio
@@ -44,8 +46,13 @@ public class Client implements Serializable {
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
-    public Client(){
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "PROFILES")
+    private Set<Integer> profiles = new HashSet<>();
 
+
+    public Client(){
+        addProfile(UserProfile.CLIENT);
     }
 
     public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType, String password) {
@@ -54,12 +61,22 @@ public class Client implements Serializable {
         this.name = name;
         this.email = email;
         this.cpfOrCnpj = cpfOrCnpj;
-        this.password = password;
         this.clientType = (clientType==null) ? null : clientType.getCod();
+        this.password = password;
+        addProfile(UserProfile.CLIENT);
     }
 
     public ClientType getClientType(){
         return ClientType.toEnum(clientType);
+    }
+
+    public Set<UserProfile> getProfile(){
+
+        return profiles.stream().map(x -> UserProfile.toEnum(x)).collect(Collectors.toSet());
+    }
+
+    public void addProfile(UserProfile profile){
+        profiles.add(profile.getCod());
     }
 
 
