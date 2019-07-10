@@ -1,16 +1,18 @@
 package br.com.CourseSpringBoot.service;
 
 
-import br.com.CourseSpringBoot.domain.Order;
-import br.com.CourseSpringBoot.domain.OrderItem;
-import br.com.CourseSpringBoot.domain.PayPal;
-import br.com.CourseSpringBoot.domain.Product;
+import br.com.CourseSpringBoot.domain.*;
 import br.com.CourseSpringBoot.enums.StatePayment;
+import br.com.CourseSpringBoot.exceptions.AuthorizationException;
 import br.com.CourseSpringBoot.exceptions.ResourceNotFoundException;
 import br.com.CourseSpringBoot.repositories.OrderItemRepository;
 import br.com.CourseSpringBoot.repositories.OrderRepository;
 import br.com.CourseSpringBoot.repositories.PaymentRepository;
+import br.com.CourseSpringBoot.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -65,5 +67,19 @@ public class OrderService {
         //emailService.sendOrderConfirmationHtmlEmail(order);
 
         return order;
+    }
+
+    public Page<Order> findPage(Integer page, Integer linesPerPage, String orderby, String direction){
+
+        UserSS userSS = UserService.authenticated();
+
+        if (userSS == null){
+            throw new AuthorizationException("Access Denied");
+        }
+
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderby);
+        Client client = clientService.findById(userSS.getId());
+
+        return orderRepository.findOrderByClient(client, pageRequest);
     }
 }

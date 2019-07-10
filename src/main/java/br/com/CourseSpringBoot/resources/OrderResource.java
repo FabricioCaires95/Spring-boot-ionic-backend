@@ -4,6 +4,7 @@ import br.com.CourseSpringBoot.domain.Category;
 import br.com.CourseSpringBoot.domain.Order;
 import br.com.CourseSpringBoot.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -40,5 +41,18 @@ public class OrderResource {
                 .path("/{id}").buildAndExpand(order.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @GetMapping()
+    public ResponseEntity<Page<Order>> findPage(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "24")Integer linesPerPage,
+            @RequestParam(value = "orderby", defaultValue = "date")String orderby,
+            @RequestParam(value = "direction", defaultValue = "DESC")String direction){
+
+        Page<Order> list = orderService.findPage(page, linesPerPage, orderby, direction);
+
+
+        return ResponseEntity.ok(list);
     }
 }

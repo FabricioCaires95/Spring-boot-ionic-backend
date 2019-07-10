@@ -46,5 +46,14 @@ public class ResourceExceptionHandler {
 
     }
 
+    @ExceptionHandler(value = AuthorizationException.class)
+    public ResponseEntity<ResponseMessage> authorization(AuthorizationException e, HttpServletRequest req){
+
+        ResponseMessage message = new ResponseMessage(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(message);
+
+    }
+
 
 }

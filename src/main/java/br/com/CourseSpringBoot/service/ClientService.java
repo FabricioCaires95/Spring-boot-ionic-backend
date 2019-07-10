@@ -7,11 +7,14 @@ import br.com.CourseSpringBoot.domain.Client;
 import br.com.CourseSpringBoot.dto.ClientDTO;
 import br.com.CourseSpringBoot.dto.ClientNewDTO;
 import br.com.CourseSpringBoot.enums.ClientType;
+import br.com.CourseSpringBoot.enums.UserProfile;
+import br.com.CourseSpringBoot.exceptions.AuthorizationException;
 import br.com.CourseSpringBoot.exceptions.DataIntegrityException;
 import br.com.CourseSpringBoot.exceptions.ResourceNotFoundException;
 import br.com.CourseSpringBoot.repositories.AddressRepository;
 import br.com.CourseSpringBoot.repositories.CityRepository;
 import br.com.CourseSpringBoot.repositories.ClientRepository;
+import br.com.CourseSpringBoot.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -40,6 +43,12 @@ public class ClientService {
     private BCryptPasswordEncoder encode;
 
     public Client findById(Integer id){
+
+        UserSS user = UserService.authenticated();
+        if (user == null || !user.hasRole(UserProfile.ADMIN) && !id.equals(user.getId())){
+            throw new AuthorizationException("Access denied! ");
+        }
+
         Optional<Client> ob = repo.findById(id);
         return ob.orElseThrow(() -> new ResourceNotFoundException(("Object not found  " + Client.class.getName())));
     }
