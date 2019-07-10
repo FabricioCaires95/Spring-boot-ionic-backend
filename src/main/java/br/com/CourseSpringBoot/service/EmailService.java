@@ -13,9 +13,7 @@ public interface EmailService {
 
     void sendOrderConfirmation(Order order);
 
-
     void sendEmail(SimpleMailMessage simpleMailMessage);
-
 
     void sendNewPasswordEmail(Client client, String newPassoword);
 }
