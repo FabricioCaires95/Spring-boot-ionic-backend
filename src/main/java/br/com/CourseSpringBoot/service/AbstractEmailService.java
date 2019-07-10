@@ -1,5 +1,6 @@
 package br.com.CourseSpringBoot.service;
 
+import br.com.CourseSpringBoot.domain.Client;
 import br.com.CourseSpringBoot.domain.Order;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,12 @@ public abstract class AbstractEmailService implements EmailService {
         return sm;
     }
 
+    @Override
+    public void sendNewPasswordEmail(Client client, String newPassoword) {
+        SimpleMailMessage msg = prepareNewPasswordEmail(client, newPassoword);
+        sendEmail(msg);
+    }
+
     protected String htmlFromTemplatePedido(Order order){
         Context context = new Context();
         context.setVariable("order", order);
@@ -79,4 +86,16 @@ public abstract class AbstractEmailService implements EmailService {
 //        return mimeMessage;
 //
 //    }
+
+    protected SimpleMailMessage prepareNewPasswordEmail(Client client, String newPassword){
+
+        SimpleMailMessage sm = new SimpleMailMessage();
+        sm.setTo(client.getEmail());
+        sm.setFrom(sender);
+        sm.setSubject("Your new password");
+        sm.setSentDate(new Date(System.currentTimeMillis()));
+        sm.setTo("Your new passoword is: " + newPassword);
+
+        return sm;
+    }
 }

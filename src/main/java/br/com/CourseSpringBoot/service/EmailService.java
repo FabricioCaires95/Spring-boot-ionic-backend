@@ -1,5 +1,6 @@
 package br.com.CourseSpringBoot.service;
 
+import br.com.CourseSpringBoot.domain.Client;
 import br.com.CourseSpringBoot.domain.Order;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -15,7 +16,6 @@ public interface EmailService {
 
     void sendEmail(SimpleMailMessage simpleMailMessage);
 
-    void sendOrderConfirmationHtmlEmail(Order order);
 
-    void sendHtmlEmail(MimeMessage msg);
+    void sendNewPasswordEmail(Client client, String newPassoword);
 }

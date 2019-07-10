@@ -30,14 +30,14 @@ public class SmtpEmailService extends AbstractEmailService{
         LOG.info("E-mail enviado");
     }
 
-    @Override
+    //@Override
     public void sendHtmlEmail(MimeMessage msg) {
         LOG.info("Simulando envio de email ");
         javaMailSender.send(msg);
         LOG.info("E-mail enviado");
     }
 
-    @Override
+   // @Override
     public void sendOrderConfirmationHtmlEmail(Order order) {
 
     }
