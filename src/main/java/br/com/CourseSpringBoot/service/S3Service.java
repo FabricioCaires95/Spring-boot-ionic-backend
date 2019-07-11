@@ -1,5 +1,6 @@
 package br.com.CourseSpringBoot.service;
 
+import br.com.CourseSpringBoot.exceptions.FileException;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
@@ -66,7 +67,7 @@ public class S3Service {
             return uploadFile(is,filename,contentType);
 
         } catch (IOException e){
-            throw new RuntimeException("IO Exception: " + e.getMessage());
+            throw new FileException("IO Exception: " + e.getMessage());
         }
     }
 
@@ -80,7 +81,7 @@ public class S3Service {
             return s3Client.getUrl(bucket, fileName).toURI();
 
         } catch (URISyntaxException e){
-            throw new RuntimeException("Cannot convert a URL to URI");
+            throw new FileException("Cannot convert a URL to URI");
         }
 
     }

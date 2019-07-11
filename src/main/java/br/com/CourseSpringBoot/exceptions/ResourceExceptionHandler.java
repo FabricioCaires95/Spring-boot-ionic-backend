@@ -1,5 +1,8 @@
 package br.com.CourseSpringBoot.exceptions;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -54,6 +57,45 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(message);
 
     }
+
+    @ExceptionHandler(value = FileException.class)
+    public ResponseEntity<ResponseMessage> file(FileException e, HttpServletRequest req){
+
+        ResponseMessage message = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+
+    }
+
+    @ExceptionHandler(value = AmazonServiceException.class)
+    public ResponseEntity<ResponseMessage> amazonService(AmazonServiceException e, HttpServletRequest req){
+        HttpStatus codeError = HttpStatus.valueOf(e.getErrorCode());
+        ResponseMessage message = new ResponseMessage(codeError.value(), e.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(codeError).body(message);
+
+    }
+
+    @ExceptionHandler(value = AmazonS3Exception.class)
+    public ResponseEntity<ResponseMessage> amazonS3(AmazonS3Exception e, HttpServletRequest req){
+
+        ResponseMessage message = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+
+    }
+
+    @ExceptionHandler(value = AmazonClientException.class)
+    public ResponseEntity<ResponseMessage> amazonClient(AmazonClientException e, HttpServletRequest req){
+
+        ResponseMessage message = new ResponseMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+
+    }
+
+
+
 
 
 }
