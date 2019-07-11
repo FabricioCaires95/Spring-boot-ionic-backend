@@ -17,16 +17,24 @@ public class ResponseMessage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer status;
-    private String msg;
     private Long timestamp;
+    private Integer status;
+    private String error;
+    private String msg;
+    private String path;
 
 
-    public ResponseMessage(Integer status, String msg, Long timestamp) {
+    public ResponseMessage(){
+
+    }
+
+    public ResponseMessage(Long timestamp, Integer status, String error, String msg, String path) {
         super();
-        this.status = status;
-        this.msg = msg;
         this.timestamp = timestamp;
+        this.status = status;
+        this.error = error;
+        this.msg = msg;
+        this.path = path;
 
     }
 }

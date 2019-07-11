@@ -31,7 +31,7 @@ public class CategoryService {
 
         Optional<Category> ob = repo.findById(id);
         return ob.orElseThrow(() ->
-                new ResourceNotFoundException("Category not found" + Category.class.getName()));
+                new ResourceNotFoundException("Category not found " + Category.class.getName()));
     }
 
     public List<Category> findAll(){
@@ -57,7 +57,7 @@ public class CategoryService {
         try {
             repo.deleteById(id);
         }catch (DataIntegrityViolationException e){
-            throw new DataIntegrityException("This Category cannot be deleted, Referential integrity constraint violation");
+            throw new DataIntegrityException("This Category cannot be deleted, Referential integrity constraint violation ");
         }
 
     }

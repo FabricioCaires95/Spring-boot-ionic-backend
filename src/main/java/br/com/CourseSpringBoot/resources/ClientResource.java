@@ -38,6 +38,14 @@ public class ClientResource {
         return ResponseEntity.ok().body(cli);
     }
 
+    @GetMapping("/email")
+    public ResponseEntity<Client> findByEmail(@RequestParam(value = "value") String email){
+
+        Client cli = service.findByEmail(email);
+
+        return ResponseEntity.ok().body(cli);
+    }
+
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO newdto){
 
@@ -79,6 +87,8 @@ public class ClientResource {
 
         return ResponseEntity.ok(listDTO);
     }
+
+
 
     @GetMapping("/page")
     public ResponseEntity<Page<ClientDTO>> findPage(

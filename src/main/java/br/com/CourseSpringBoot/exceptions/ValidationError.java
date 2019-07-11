@@ -14,8 +14,8 @@ public class ValidationError extends ResponseMessage {
 
     private List<FieldMessage> listErrors = new ArrayList<>();
 
-    public ValidationError(Integer status, String msg, Long timestamp){
-        super(status, msg, timestamp);
+    public ValidationError(Long timestamp, Integer status, String error, String msg, String path) {
+        super(timestamp, status, error, msg, path);
 
     }
 

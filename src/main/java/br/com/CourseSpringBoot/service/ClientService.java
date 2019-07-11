@@ -55,6 +55,9 @@ public class ClientService {
     @Value("${img.prefix.client.profile}")
     private String prefix;
 
+    @Value("${img.profile.size}")
+    private Integer size;
+
     public Client findById(Integer id){
 
         UserSS user = UserService.authenticated();
@@ -68,6 +71,19 @@ public class ClientService {
 
     public List<Client> findAll(){
         return repo.findAll();
+    }
+
+    public Client findByEmail(String email){
+        UserSS userSS = UserService.authenticated();
+        if (userSS == null || !userSS.hasRole(UserProfile.ADMIN) && !email.equals(userSS.getUsername())){
+            throw new AuthorizationException("Access Denied");
+        }
+        Client client = repo.findByEmail(email);
+        if (client == null){
+            throw new ResourceNotFoundException("Email has not found: " + userSS.getId() + Client.class.getName());
+        }
+
+        return client;
     }
 
     @Transactional
@@ -137,6 +153,10 @@ public class ClientService {
         }
 
         BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+
+//        jpgImage = imageService.cropSquare(jpgImage);
+//        jpgImage = imageService.resize(jpgImage, size);
+
         String fileName = prefix + user.getId() + ".jpeg";
 
         return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpeg"), fileName, "image");
