@@ -56,7 +56,6 @@ public class ResourceExceptionHandler {
 
         ResponseMessage message = new ResponseMessage(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Access Denied", e.getMessage(), req.getRequestURI());
 
-
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(message);
 
     }
