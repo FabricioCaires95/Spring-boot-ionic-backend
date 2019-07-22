@@ -18,11 +18,15 @@ import java.util.List;
 @Repository
 public interface ProductRepository  extends JpaRepository<Product, Integer> {
 
-//    @Query(value = "SELECT DISTINCT obj FROM Product obj INNER JOIN obj.categories cat" +
-//            " WHERE obj.name LIKE %:name% AND cat IN :categories")
-//    Page<Product> search(@Param("name") String name, @Param("categories") List<Category>categories, Pageable pageRequest);
+    @Transactional(readOnly = true)
+    @Query(value = "SELECT DISTINCT obj FROM Product obj INNER JOIN obj.categories cat WHERE obj.name LIKE %:name% AND cat IN :categories", nativeQuery = false)
+    Page<Product> findDistinctByNameContainingAndCategoriesIn(@Param("name") String name, @Param("categories") List<Category>categories, Pageable pageRequest);
 
     @Transactional(readOnly = true)
-    Page<Product> findDistinctByNameContainingAndCategoriesIn(String name,List<Category>categories, Pageable pageRequest);
+    @Query(value = "SELECT P.NAME, P.ID, P.PRICE FROM PRODUCT P\n" +
+            "INNER JOIN CATEGORY_PRODUCT CP ON P.ID = CP.PRODUCT_ID \n" +
+            "INNER JOIN CATEGORY C ON C.ID = CP.CATEGORY_ID\n" +
+            "WHERE CATEGORY_ID = ?1 ", nativeQuery = true)
+    List<Product> findAllByCategoriesId(Integer id);
 
 }

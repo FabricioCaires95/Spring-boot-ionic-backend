@@ -8,6 +8,7 @@ import br.com.CourseSpringBoot.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +33,14 @@ public class ProductService {
     }
 
     public Page<Product> search(String name, List<Integer> ids, Integer page, Integer linesPerPage, String orderby, String direction){
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderby);
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderby);
         List<Category> categories = categoryRepository.findAllById(ids);
         return productRepository.findDistinctByNameContainingAndCategoriesIn(name, categories, pageRequest);
+    }
+
+    public List<Product> find(Integer id){
+
+        return productRepository.findAllByCategoriesId(id);
     }
 
 }

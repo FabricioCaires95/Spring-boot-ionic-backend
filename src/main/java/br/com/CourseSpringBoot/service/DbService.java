@@ -68,7 +68,27 @@ public class DbService {
         Product p7 = new Product(null, "Java How to Program", 70.00);
         Product p8 = new Product(null, "Car Mirror", 75.00);
 
-        c1.getProducts().addAll(Arrays.asList(p1,p2,p3));
+        Product p10 = new Product(null, "product 10", 75.00);
+        Product p11 = new Product(null, "product 11", 75.00);
+        Product p12 = new Product(null, "product 12", 75.00);
+        Product p13 = new Product(null, "product 13", 75.00);
+        Product p14 = new Product(null, "product 14", 75.00);
+        Product p15 = new Product(null, "product 15", 75.00);
+        Product p16 = new Product(null, "product 16", 75.00);
+        Product p17 = new Product(null, "product 17", 75.00);
+        Product p18 = new Product(null, "product 18", 75.00);
+        Product p19 = new Product(null, "product 19", 75.00);
+        Product p20 = new Product(null, "product 20", 75.00);
+        Product p21 = new Product(null, "product 21", 75.00);
+        Product p22 = new Product(null, "product 22", 75.00);
+        Product p23 = new Product(null, "product 23", 75.00);
+        Product p24 = new Product(null, "product 24", 75.00);
+        Product p25 = new Product(null, "product 25", 75.00);
+        Product p26 = new Product(null, "product 26", 75.00);
+
+
+
+        c1.getProducts().addAll(Arrays.asList(p1,p2,p3,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20,p21,p22,p23,p24,p25,p26));
         c2.getProducts().addAll(Arrays.asList(p2,p6));
         c3.getProducts().addAll(Arrays.asList(p8));
         c4.getProducts().addAll(Arrays.asList(p7));
@@ -78,6 +98,24 @@ public class DbService {
         p2.getCategories().addAll(Arrays.asList(c1,c2));
         p3.getCategories().addAll(Arrays.asList(c1));
         p4.getCategories().addAll(Arrays.asList(c1,c5));
+
+        p10.getCategories().add(c1);
+        p11.getCategories().add(c1);
+        p12.getCategories().add(c1);
+        p13.getCategories().add(c1);
+        p14.getCategories().add(c1);
+        p15.getCategories().add(c1);
+        p16.getCategories().add(c1);
+        p17.getCategories().add(c1);
+        p18.getCategories().add(c1);
+        p19.getCategories().add(c1);
+        p20.getCategories().add(c1);
+        p21.getCategories().add(c1);
+        p22.getCategories().add(c1);
+        p23.getCategories().add(c1);
+        p24.getCategories().add(c1);
+        p25.getCategories().add(c1);
+        p26.getCategories().add(c1);
 
         State s1 = new State(null, "California");
         State s2 = new State(null, "Florida");
@@ -108,7 +146,7 @@ public class DbService {
         s2.getCities().addAll(Arrays.asList(ci2,ci3));
 
         categoryRepository.saveAll(Arrays.asList(c1,c2,c3,c4,c5,c6,c7));
-        productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8));
+        productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8,p10,p11,p12,p13,p14,p15,p16,p16,p17,p18,p19,p20,p21,p22,p23,p24,p25,p26));
 
         stateRepository.saveAll(Arrays.asList(s1,s2));
         cityRepository.saveAll(Arrays.asList(ci1,ci2,ci3,ci4));
