@@ -23,11 +23,11 @@ public class ProductResource {
     @Autowired
     private ProductService productService;
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Product> find(@PathVariable Integer id){
-//        Product p = productService.findById(id);
-//        return ResponseEntity.ok().body(p);
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> find(@PathVariable Integer id){
+        Product p = productService.findById(id);
+        return ResponseEntity.ok().body(p);
+    }
 
     @GetMapping()
     public ResponseEntity<Page<ProductDTO>> findPage(
@@ -40,22 +40,20 @@ public class ProductResource {
 
         String nameDecoded = URL.decodeParam(name);
         List<Integer> ids = URL.decodeIntList(categories);
-        System.out.println("NAME DECODED: " + nameDecoded);
-        System.out.println("ID: " + ids);
         Page<Product> list = productService.search(nameDecoded, ids, page , linesPerPage, orderby, direction);
         Page<ProductDTO> pageDto = list.map(obj -> new ProductDTO(obj));
 
         return ResponseEntity.ok().body(pageDto);
     }
 
-    @GetMapping("/{categoria_id}")
-    public ResponseEntity<List<ProductDTO>> find(@PathVariable Integer categoria_id){
-
-        List<Product> list = productService.find(categoria_id);
-        List<ProductDTO> listDto = list.stream().map(obj -> new ProductDTO(obj)).collect(Collectors.toList());
-
-        return ResponseEntity.ok().body(listDto);
-
-    }
+//    @GetMapping("/{categoria_id}")
+//    public ResponseEntity<List<ProductDTO>> find(@PathVariable Integer categoria_id){
+//
+//        List<Product> list = productService.find(categoria_id);
+//        List<ProductDTO> listDto = list.stream().map(obj -> new ProductDTO(obj)).collect(Collectors.toList());
+//
+//        return ResponseEntity.ok().body(listDto);
+//
+//    }
 
 }
