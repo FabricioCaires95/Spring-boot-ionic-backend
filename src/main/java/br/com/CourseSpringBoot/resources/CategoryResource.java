@@ -3,6 +3,9 @@ package br.com.CourseSpringBoot.resources;
 import br.com.CourseSpringBoot.domain.Category;
 import br.com.CourseSpringBoot.dto.CategoryDTO;
 import br.com.CourseSpringBoot.service.CategoryService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +30,7 @@ public class CategoryResource {
     @Autowired
     private CategoryService service;
 
-
+    @ApiOperation("return a category by id ")
     @GetMapping("/{id}")
     public ResponseEntity<Category> findById(@PathVariable Integer id){
 
@@ -36,6 +39,7 @@ public class CategoryResource {
         return ResponseEntity.ok().body(cat);
     }
 
+    @ApiOperation("insert a new category, only adm'users can do that")
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO catDTO){
@@ -59,6 +63,10 @@ public class CategoryResource {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "can't delete this resource, because it has products"),
+            @ApiResponse(code = 404, message = "code has not found")
+    })
     @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id){

@@ -38,9 +38,9 @@ public class ProductService {
         return productRepository.findDistinctByNameContainingAndCategoriesIn(name, categories, pageRequest);
     }
 
-    public List<Product> find(Integer id){
-
-        return productRepository.findAllByCategoriesId(id);
-    }
+//    public List<Product> find(Integer id){
+//
+//        return productRepository.findAllByCategoriesId(id);
+//    }
 
 }
