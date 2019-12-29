@@ -27,8 +27,7 @@ RUN mvn package -DskipTests
 FROM adoptopenjdk/openjdk8:jdk8u202-b08-alpine-slim
 
 # Copy the jar to the production image from the builder stage.
-COPY --from=builder /app/target/control-*.jar /control.jar
-COPY src/main/resources/google/nilone-aic-c57226f16cff.json /nilone-aic-c57226f16cff.json
+COPY --from=builder /app/target/CourseSpringBoot-*.jar /control.jar
 
 #setting environment variables
 
